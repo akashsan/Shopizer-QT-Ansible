@@ -1,0 +1,10 @@
+---
+# tasks file for shopizer
+
+- name: Install Shopizer for Debian OS
+  import_tasks: debian.yml
+  when: ansible_os_family == 'Debian'
+
+- name: Install Shopizer for redhat OS
+  import_tasks: redhat.yml
+  when: ansible_os_family == 'RedHat'

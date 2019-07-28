@@ -1,0 +1,37 @@
+---
+# tasks file for shopizer on a redhat machine
+
+- name: install java 1.8.0 on redhat machine
+  yum:
+    name: java-1.8.0-openjdk
+    state: present
+- name: Create directory /opt/tomcat/ for on redhat machine
+  file:
+    path: /opt/tomcat/
+    state: directory     
+    mode: '0777'
+- name: Download tomcat url using get_url  for  redhat machine 
+  get_url:
+    url: "{{ tomcat_url }}"
+    dest: /opt/tomcat/
+- name: Extract tomcat to /opt/tomcat/ for redhat machine
+  unarchive:
+    src: /opt/tomcat/apache-tomcat-8.5.38.tar.gz
+    dest: /opt/tomcat/
+    remote_src: yes
+- name: Copy tomcat systemd service file to /etc/systemd/system/tomcat.service for redhat machine
+  template:
+    src: tomcat.service_redhat.j2
+    dest: /etc/systemd/system/tomcat.service
+- name: Download shopizer WAR to tomcat server for redhat Machine 
+  get_url:
+    url: "{{ Shopizer_war_url }}"
+    dest: /opt/tomcat/apache-tomcat-8.5.38/webapps/         
+- name: Reload daemon for redhat machine
+  systemd:
+    daemon_reload: yes
+- name: Start tomcat for redhat machine
+  systemd:
+    name: tomcat
+    enabled: yes
+    state: restarted                  

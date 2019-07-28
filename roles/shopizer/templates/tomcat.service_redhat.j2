@@ -1,0 +1,22 @@
+[Unit]
+Description=Apache Tomcat Web Application Container
+Wants=network.target
+After=network.target
+
+[Service]
+Type=forking
+
+Environment=JAVA_HOME=/usr/lib/jvm/jre
+
+Environment=CATALINA_PID=/opt/tomcat/temp/tomcat.pid
+Environment=CATALINA_HOME=/opt/tomcat
+Environment='CATALINA_OPTS=-Xms1024M -Xmx1024M -Djava.net.preferIPv4Stack=true'
+Environment='JAVA_OPTS=-Djava.awt.headless=true'
+
+ExecStart=/opt/tomcat/apache-tomcat-8.5.38/bin/startup.sh
+ExecStop=/opt/tomcat/apache-tomcat-8.5.38/bin/shutdown.sh
+
+SuccessExitStatus=143
+
+[Install]
+WantedBy=multi-user.target

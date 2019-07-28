@@ -1,0 +1,12 @@
+---
+# vars file for shopizer
+xmx_size: 1024m
+max_perm_size: 256m
+tomcat_additional_packages:
+  - tomcat8-docs 
+  - tomcat8-admin 
+  - tomcat8-examples
+tomcat_username: admin
+tomcat_password: password
+tomcat_url: https://archive.apache.org/dist/tomcat/tomcat-8/v8.5.38/bin/apache-tomcat-8.5.38.tar.gz
+Shopizer_war_url: https://shopizer-war.s3.us-east-2.amazonaws.com/ROOT.war

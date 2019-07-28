@@ -1,0 +1,31 @@
+---
+# tasks file for debian based os
+
+- name: update ubuntu packages & install tomcat8 for Debian Machine
+  apt:
+    name: tomcat8
+    update_cache: yes
+    state: present
+- name: copy tomcat8 file for Debian Machine
+  template:
+    src: tomcat8.j2
+    dest: /etc/default/tomcat8
+  notify:
+    - restart tomcat8 for debian
+- name: install additional tomcat packages for Debian Machine
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ tomcat_additional_packages }}"
+- name: copy tomcat users for Debian Machine
+  template:
+    src: tomcat-users.xml.j2
+    dest: /etc/tomcat8/tomcat-users.xml
+  notify:
+    - restart tomcat8 for debian
+- name: Download shopizer WAR to tomcat server for Debian Machine 
+  get_url:
+    url: "{{ Shopizer_war_url }}"
+    dest: /var/lib/tomcat8/webapps/    
+  notify:
+    - restart tomcat8 for debian

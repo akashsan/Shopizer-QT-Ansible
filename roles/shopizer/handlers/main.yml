@@ -1,0 +1,6 @@
+---
+# handlers file for Shopizer
+- name: restart tomcat8 for debian
+  service: 
+    name: tomcat8
+    state: restarted
